@@ -45,31 +45,11 @@ We will be using those three, and no others, from the `Clang64` environment of *
 
 ### Gather the dependencies required
 
-Open the **MSYS2** **Clang64** terminal and download the following tools
+Open the **MSYS2** **Clang64** terminal and download the following tools by copy-pasting the following command:
 
 ```bash
-pacman -S mingw-w64-clang-x86_64-cmake
-pacman -S mingw-w64-clang-x86_64-ninja
-pacman -S mingw-w64-clang-x86_64-clang
-pacman -S mingw-w64-clang-x86_64-llvm (already gathered with `pacman -S mingw-w64-clang-x86_64-clang`)
-pacman -S mingw-w64-clang-x86_64-llvm-libs (already gathered with `pacman -S mingw-w64-clang-x86_64-clang`)
-pacman -S mingw-w64-clang-x86_64-clang-analyzer (non required, but nice to have)
-pacman -S mingw-w64-clang-x86_64-lld (already gathered with `pacman -S mingw-w64-clang-x86_64-clang`)
-pacman -S mingw-w64-clang-x86_64-libc++ (already gathered)
-pacman -S mingw-w64-x86_64-libunwind
-pacman -S mingw-w64-clang-x86_64-clang-tools-extra
-pacman -S pacman -S mingw-w64-clang-x86_64-compiler-rt (already gathered with `pacman -S mingw-w64-clang-x86_64-clang`)
-pacman -S mingw-w64-clang-x86_64-gcc-compat
-```
-
-> Feel free to merge them in just one command.
-
-### Optimizing your development workflow with `Make` (recommended)
-
-If you want to take advantage of working with the `Makefiles` configured for the project, you'll need the following one:
-
-```bash
-pacman -S mingw-w64-clang-x86_64-make
+pacman -S \
+    mingw-w64-clang-x86_64-{make,cmake,ninja,clang,clang-analyzer,llvm,llvm-libs,lld,libc++,clang-tools-extra,compiler-rt,libunwind,clang-tools-extra,gcc,gcc-compat,diffutils}
 ```
 
 #### Renaming the `Make` binary (optional)
@@ -101,9 +81,11 @@ on how to integrate this setup with OpenCV on Windows [here](https://github.com/
 For making the things easier, we just add the **MinGW** `Clang64` environment to our *PATH* in our personal
 computers. Take this in consideration, because certain elements are configured assuming this premise.
 
-## Configuring and building the project
+## Configuring and building the project (for raw CMake users)
 
 With all the dependencies that we need gathered, now is straightforward to configure and build the project.
+
+> **IMPORTANT!:** Wait until the next section if you downloaded `Make` in the previous installation step and you plan to use it
 
 1. Create a new `build` directory and move inside it.
 
@@ -142,7 +124,7 @@ cmake -S . -B ./build -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=./clang-x86_64_windows_g
 > the command line `-DCMAKE_BUILD_TYPE=Release`, or use the `make build_release`
 > *NOTE:* Project's dependencies are built in **release** mode always.
 
-### Make support
+### Optimizing your development workflow with `Make` (recommended)
 
 We've recently added support for `Make` via Makefiles. This allows us to have a nice and better workflow while we're
 working on the project. Available `Make` commands are:
